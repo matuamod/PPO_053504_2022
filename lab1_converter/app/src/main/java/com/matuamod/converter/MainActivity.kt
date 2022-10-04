@@ -1,5 +1,6 @@
 package com.matuamod.converter
 
+import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Build
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     private var resNumberStr: String? = ""
     private var outputNumberStr: String? = ""
+    private var cursorStart: Int = 0
+    private var isFocused: Boolean = false
+    private var clipboardManager: ClipboardManager? = null
+    private var clipData: ClipData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +78,8 @@ class MainActivity : AppCompatActivity() {
             putBoolean("isEnabled_ViceVersa", vice_versa_button.isEnabled)
             putString("resNumberStr", resNumberStr)
             putString("outputNumberStr", outputTextField.text.toString())
+            putInt("cursorStart", cursorStart)
+            putBoolean("isFocused", entryTextField.isFocused)
         }
     }
 
@@ -95,6 +102,8 @@ class MainActivity : AppCompatActivity() {
         vice_versa_button.isEnabled = savedInstanceState.getBoolean("isEnabled_ViceVersa")
         resNumberStr = savedInstanceState.getString("resNumberStr")
         outputNumberStr = savedInstanceState.getString("outputNumberStr")
+        cursorStart = savedInstanceState.getInt("cursorStart")
+        isFocused = savedInstanceState.getBoolean("isFocused")
         configNumber(true)
     }
 
@@ -163,6 +172,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             binding.entryTextField.setText(resNumberStr)
+            if(isFocused) {
+                binding.entryTextField.setSelection(cursorStart)
+            }
             binding.outputTextField.setText(outputNumberStr)
             return
         }
@@ -170,37 +182,64 @@ class MainActivity : AppCompatActivity() {
         dataModel.digit.observe(this) {
             if(it != "enter" && it != "delete") {
                 if(it != "." || (getCropCount() < 1 && resNumberStr!!.isNotEmpty())) {
-                    resNumberStr += it
-                    binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
-                    binding.entryTextField.setText(resNumberStr)
+                    isFocused = entryTextField.isFocused
+                    if(isFocused) {
+                        addByCursor(it)
+                        binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
+                        binding.entryTextField.setText(resNumberStr)
+                        cursorStart += 1
+                        entryTextField.setSelection(cursorStart)
+                    }
+                    else {
+                        resNumberStr += it
+                        binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
+                        binding.entryTextField.setText(resNumberStr)
+                    }
+                }
+                else if(it == "." && getCropCount() <= 1) {
+                    Toast.makeText(this, "You can't add more crops", Toast.LENGTH_SHORT).show()
                 }
             }
             else if(it == "delete") {
 
                 if(resNumberStr!!.isNotEmpty()) {
-                    resNumberStr = removeLastChar(resNumberStr)
-                    binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
-                    binding.entryTextField.setText(resNumberStr)
+                    isFocused = entryTextField.isFocused
+                    if(isFocused) {
+                        deleteByCursor()
+                        binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
+                        binding.entryTextField.setText(resNumberStr)
+                        entryTextField.setSelection(cursorStart)
+                    }
+                    else {
+                        resNumberStr = removeLastChar(resNumberStr)
+                        binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
+                        binding.entryTextField.setText(resNumberStr)
+                    }
 
                     if(resNumberStr!!.isEmpty()) {
+                        Toast.makeText(this, "Nothing to delete", Toast.LENGTH_SHORT).show()
                         binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
                     }
                 }
                 else {
+                    Toast.makeText(this, "Nothing to delete", Toast.LENGTH_SHORT).show()
                     binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
                 }
             }
             else {
 
-                if(resNumberStr!!.isNotEmpty()) {
+                if(resNumberStr!!.isNotEmpty() && areUnitsChecked()) {
+                    Toast.makeText(this, "Converting...", Toast.LENGTH_SHORT).show()
                     binding.outputTextField.setText(convertData())
 
                     if(resNumberStr!!.isEmpty()) {
+                        Toast.makeText(this, "Nothing to convert", Toast.LENGTH_SHORT).show()
                         binding.outputTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
                         binding.outputTextField.setText("")
                     }
                 }
                 else {
+                    Toast.makeText(this, "Nothing to convert", Toast.LENGTH_SHORT).show()
                     binding.outputTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
                     binding.outputTextField.setText("")
                 }
@@ -312,6 +351,8 @@ class MainActivity : AppCompatActivity() {
 
         if(areUnitsChecked()) {
             if(vice_versa_button.isEnabled) {
+                Toast.makeText(this, "Vice Versa...", Toast.LENGTH_SHORT).show()
+
                 fromButtonName = checkedRadioButtonName(radioFromUnitButton_1,
                                                             radioFromUnitButton_2,
                                                                 radioFromUnitButton_3)
@@ -326,7 +367,6 @@ class MainActivity : AppCompatActivity() {
                     outputTextField.text = entryTextField.text
                     entryTextField.text = bufferTextField
                     resNumberStr = entryTextField.text.toString()
-//                    outputNumberStr = outputTextField.text.toString()
                 }
 
                 makeUnitsNotActive()
@@ -459,7 +499,7 @@ class MainActivity : AppCompatActivity() {
 
     fun makeCopyFrom(view: View) {
         val defaultButtonStr = resources.getResourceEntryName(view.getId())
-        var clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 
         val notCopiedMsg = Toast.makeText(this, "Nothing to copy", Toast.LENGTH_SHORT)
         val copiedMsg = Toast.makeText(this, "Copied successfully", Toast.LENGTH_SHORT)
@@ -470,8 +510,8 @@ class MainActivity : AppCompatActivity() {
             if (textToCopy.isEmpty()) {
                 notCopiedMsg.show()
             } else {
-                val clipData = ClipData.newPlainText("text", textToCopy)
-                clipboardManager.setPrimaryClip(clipData)
+                clipData = ClipData.newPlainText("text", textToCopy)
+                clipboardManager?.setPrimaryClip(clipData!!)
 
                 copiedMsg.show()
             }
@@ -482,11 +522,93 @@ class MainActivity : AppCompatActivity() {
             if (textToCopy.isEmpty()) {
                 notCopiedMsg.show()
             } else {
-                val clipData = ClipData.newPlainText("text", textToCopy)
-                clipboardManager.setPrimaryClip(clipData)
+                clipData = ClipData.newPlainText("text", textToCopy)
+                clipboardManager?.setPrimaryClip(clipData!!)
 
                 copiedMsg.show()
             }
+        }
+    }
+
+
+    private fun isNumeric(toCheck: String): Boolean {
+        val regexNumber = "^[0-9]*[.]?[0-9]+\$".toRegex()
+        val regexCrop = ".".toRegex()
+        return toCheck.matches(regexNumber) || toCheck.matches(regexCrop)
+    }
+
+
+    private fun parseAddedText(insertStr: String): Boolean {
+        if(isNumeric(insertStr)) {
+            if(resNumberStr?.contains(".")!! && insertStr.contains(".")) {
+                Toast.makeText(this, "Can't add inserted value with crops", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            return true
+        }
+        Toast.makeText(this, "Can't add inserted value, not digit", Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+
+    private fun addByCursor(insertStr: String) {
+        if(parseAddedText(insertStr)) {
+            cursorStart = entryTextField.selectionStart
+            val firstNumPart = entryTextField.text?.substring(0, cursorStart)
+            val secNumPart = entryTextField.text?.substring(cursorStart, entryTextField.text!!.length)
+
+            resNumberStr = ""
+
+            if(firstNumPart?.isNotEmpty()!! && secNumPart?.isNotEmpty()!!) {
+                resNumberStr = firstNumPart?.plus("").plus(insertStr).plus(secNumPart)
+            }
+            else if(firstNumPart?.isEmpty()!! && secNumPart?.isNotEmpty()!!) {
+                resNumberStr = insertStr.plus("").plus(secNumPart)
+            }
+            else if(firstNumPart?.isNotEmpty()!! && secNumPart?.isEmpty()!!) {
+                resNumberStr = firstNumPart?.plus("").plus(insertStr)
+            } else { resNumberStr = insertStr }
+        }
+    }
+
+
+    private fun deleteByCursor() {
+        cursorStart = entryTextField.selectionStart
+        var firstNumPart = entryTextField.text?.substring(0, cursorStart)
+        val secNumPart = entryTextField.text?.substring(cursorStart, entryTextField.text!!.length)
+
+        if(firstNumPart?.isNotEmpty()!!) {
+            firstNumPart = removeLastChar(firstNumPart)
+            cursorStart -= 1
+        } else run { return }
+
+        resNumberStr = ""
+
+        if(firstNumPart?.isNotEmpty()!! && secNumPart?.isNotEmpty()!!) {
+            resNumberStr = firstNumPart?.plus("").plus(secNumPart)
+        }
+        else if(firstNumPart?.isEmpty()!! && secNumPart?.isNotEmpty()!!) {
+            resNumberStr = secNumPart
+        }
+        else if(firstNumPart?.isNotEmpty()!! && secNumPart?.isEmpty()!!) {
+            resNumberStr = firstNumPart
+        }
+    }
+
+
+    fun pasteByClick(view: View) {
+        isFocused = entryTextField.isFocused
+        if(isFocused) {
+            val primaryClip = clipboardManager?.getPrimaryClip()
+            val itemText = primaryClip?.getItemAt(0)?.text.toString()
+            Log.d("LogMAct", "Res paste item is ".plus(itemText))
+            addByCursor(itemText)
+            if(resNumberStr!!.isNotEmpty()) {
+                entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30F)
+                entryTextField.setText(resNumberStr)
+            }
+        } else {
+            Toast.makeText(this, "Make cursor focused firstly", Toast.LENGTH_SHORT).show()
         }
     }
 }

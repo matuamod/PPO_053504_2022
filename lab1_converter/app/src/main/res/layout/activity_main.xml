@@ -309,7 +309,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="82dp"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:fontFamily="monospace"
         android:hint="Entry field :"
         android:isScrollContainer="true"
@@ -317,7 +317,8 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="20dp"
-        android:cursorVisible="false"
+        android:textCursorDrawable="@android:color/white"
+        android:cursorVisible="true"
         app:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -330,7 +331,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="82dp"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:fontFamily="monospace"
         android:hint="Result :"
         android:isScrollContainer="true"
@@ -338,7 +339,9 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="20dp"
+        android:focusableInTouchMode="true"
         android:cursorVisible="false"
+        android:focusable="false"
         app:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -407,5 +410,21 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/paste_button"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:backgroundTint="@color/black"
+        android:onClick="pasteByClick"
+        android:paddingHorizontal="4dp"
+        android:text="Paste"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCopy_1"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

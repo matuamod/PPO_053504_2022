@@ -309,9 +309,11 @@
         android:layout_height="57dp"
         android:layout_marginStart="14dp"
         android:layout_marginBottom="52dp"
+        android:focusableInTouchMode="true"
         android:cursorVisible="false"
+        android:focusable="false"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:fontFamily="monospace"
         android:hint="Result :"
         android:inputType="numberDecimal"
@@ -386,5 +388,18 @@
         app:layout_constraintStart_toEndOf="@+id/buttonCopy_1">
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/paste_button"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/black"
+        android:onClick="pasteByClick"
+        android:paddingHorizontal="4dp"
+        android:text="Paste"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/outputTextField"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCopy_1"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
