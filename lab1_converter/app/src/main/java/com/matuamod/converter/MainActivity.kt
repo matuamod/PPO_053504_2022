@@ -222,7 +222,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 else {
-                    Toast.makeText(this, "Nothing to delete", Toast.LENGTH_SHORT).show()
+                    val buffer = Toast.makeText(this, "Nothing to delete", Toast.LENGTH_SHORT).show()
+
                     binding.entryTextField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
                 }
             }
@@ -478,15 +479,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (radioDistanceButton.isChecked) {
-                        val distRatioList = listOf<Double>(0.621, 0.54, 1.609, 0.869, 1.852, 1.151)
+                        val distRatioList = listOf<Double>(0.62137119223733, 0.53995680345572,
+                                                            1.609344, 0.86897624190065,
+                                                            1.852, 1.1507794480235)
                         toValue = convertDataByUnits(fromValue, fromButtonName, toButtonName, distRatioList)
                     }
                     else if(radioWeightButton.isChecked) {
-                        val weightRatioList = listOf<Double>(2.205, 35.274, 0.454, 16.0, 0.0283, 0.0625)
+                        val weightRatioList = listOf<Double>(2.2045855379189, 35.273368606702,
+                                                                0.4536, 16.0, 0.02835, 0.0625)
                         toValue = convertDataByUnits(fromValue, fromButtonName, toButtonName, weightRatioList)
                     }
                     else {
-                        val currencyRatioList = listOf<Double>(1.03, 2.52, 0.98, 2.47, 0.4, 0.41)
+                        val currencyRatioList = listOf<Double>(1.009011, 2.52506, 0.99043, 2.49329,
+                                                                                    0.396036, 0.4175)
                         toValue = convertDataByUnits(fromValue, fromButtonName, toButtonName, currencyRatioList)
                     }
                 }
