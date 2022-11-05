@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="32dp"
+    tools:context=".AddItemActivity">
+
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phase name: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/editDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Duration: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/editAttemptCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Attempt count: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <Button
+        android:id="@+id/addOrUpdatePhase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Add" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

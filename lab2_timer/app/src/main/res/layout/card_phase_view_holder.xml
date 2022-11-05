@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:background="#FF071C"
+        android:orientation="vertical"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/phaseName"
+                android:layout_width="wrap_content"
+                android:hint="Phase name :"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                tools:text="Phase name"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/phaseDuration"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:hint="Duration :"
+                android:textColorHint="#B4B0B0"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/durationTextView"
+                android:layout_width="wrap_content"
+                tools:text="Duration"
+                android:layout_marginLeft="10dp"
+                android:textColor="#B4B0B0"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/phaseAttemptCount"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:hint="Attempt count :"
+                android:textColorHint="#B4B0B0"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/attemptCountTextView"
+                android:layout_width="wrap_content"
+                tools:text="Attempt count"
+                android:textColor="#B4B0B0"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/action_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="335dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_delete"
+        />
+
+
+    <ImageView
+        android:id="@+id/action_update"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="285dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_update"
+        />
+
+</androidx.cardview.widget.CardView>

@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "matuamod_timer"
+rootProject.name = "lab2_timer"
 include ':app'

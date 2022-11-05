@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    tools:context=".AddItemActivity">
+
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Item name: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/editDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Duration: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/editColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Color: "
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPhaseView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="25dp"
+        tools:itemCount="4"
+        tools:listitem="@layout/card_phase_view_holder"/>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
+        <Button
+            android:id="@+id/deleteAllPhases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_gravity="center_horizontal"
+            android:text="del phases" />
+
+
+        <Button
+            android:id="@+id/addOrUpdateItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Add timer" />
+
+
+        <Button
+            android:id="@+id/addPhase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Add phase" />
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

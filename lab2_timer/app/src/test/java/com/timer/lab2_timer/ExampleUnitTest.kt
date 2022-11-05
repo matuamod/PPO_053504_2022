@@ -1,4 +1,4 @@
-package com.timer.matua_timer
+package com.timer.lab2_timer
 
 import org.junit.Test
 
