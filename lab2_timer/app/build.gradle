@@ -8,6 +8,12 @@ android {
     namespace 'com.timer.lab2_timer'
     compileSdk 32
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId "com.timer.lab2_timer"
         minSdk 21
@@ -66,4 +72,9 @@ dependencies {
     //noinspection GradleDependency
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_extension_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+
+    implementation 'com.zeugmasolutions.localehelper:locale-helper-android:1.5.1'
+
 }

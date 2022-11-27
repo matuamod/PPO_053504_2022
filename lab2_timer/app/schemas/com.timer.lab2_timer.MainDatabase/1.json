@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "56ff3baa1591c04e63f7e4a9eb605b22",
+    "identityHash": "a5d905ee493b4dfa1eda689618619452",
     "entities": [
       {
         "tableName": "items",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "phases",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timer_id` INTEGER, `name` TEXT NOT NULL, `duration` INTEGER NOT NULL, `attempt_count` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY(`timer_id`) REFERENCES `items`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timer_id` INTEGER, `name` TEXT NOT NULL, `duration` INTEGER NOT NULL, `rest` INTEGER NOT NULL, `attempt_count` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY(`timer_id`) REFERENCES `items`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "timer_id",
@@ -61,6 +61,12 @@
           {
             "fieldPath": "duration",
             "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rest",
+            "columnName": "rest",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -102,7 +108,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '56ff3baa1591c04e63f7e4a9eb605b22')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5d905ee493b4dfa1eda689618619452')"
     ]
   }
 }

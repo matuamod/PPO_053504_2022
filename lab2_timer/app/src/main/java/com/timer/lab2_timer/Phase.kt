@@ -24,6 +24,9 @@ data class Phase (
     @ColumnInfo(name = "duration")
     var duration: Int,
 
+    @ColumnInfo(name = "rest")
+    var rest: Int,
+
     @ColumnInfo(name = "attempt_count")
     var attempt_count: Int,
 

@@ -1,15 +1,20 @@
 package com.timer.lab2_timer
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.timer.lab2_timer.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -19,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var itemAdapter: ItemAdapter? = null
+    private var toolbar: Toolbar? = null
+    private var sharedPreferences: SharedPreferences? = null
     private val mainDatabase by lazy { MainDatabase.getDatabase(this).getItemDao() }
     // The Database won't be created until we call it.
 
@@ -26,18 +33,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.AppTheme)
+
         Log.d("MainActivity", "onCreate method started")
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
 
-        val toolbar: Toolbar? = findViewById<View>(R.id.toolbar) as Toolbar?
+        toolbar = findViewById<View>(R.id.toolbar) as Toolbar?
         setSupportActionBar(toolbar)
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_settings)
         toolbar?.setNavigationOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
+
+        getSharedPreferences()
 
         binding.addItemButton.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
@@ -73,6 +86,22 @@ class MainActivity : AppCompatActivity() {
 
             val dialog = builder.create()
             dialog.show()
+        }
+    }
+
+
+    private fun getSharedPreferences() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val isDarkTheme = sharedPreferences?.getBoolean("theme_preference", false)
+
+        if (isDarkTheme!!)
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
@@ -124,6 +153,23 @@ class MainActivity : AppCompatActivity() {
 
                     val dialog = builder.create()
                     dialog.show()
+                }
+
+                itemAdapter?.setOnActionPlayListener {
+                    if(it.duration > 0) {
+                        val intent = Intent(this@MainActivity, TimerActivity::class.java)
+                        intent.putExtra("ItemData", it)
+                        startActivity(intent)
+                    }
+                    else {
+                        val builder = AlertDialog.Builder(this@MainActivity)
+                        builder.setMessage("Nothing to start...")
+                        builder.setPositiveButton("OK") {p0, p1 ->
+                            p0.dismiss()
+                        }
+                        val dialog = builder.create()
+                        dialog.show()
+                    }
                 }
             }
         }

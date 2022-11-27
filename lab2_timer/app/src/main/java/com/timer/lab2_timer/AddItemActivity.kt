@@ -1,15 +1,13 @@
 package com.timer.lab2_timer
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
-import android.view.ViewGroup
+import android.widget.RadioButton
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.marginTop
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.timer.lab2_timer.databinding.ActivityAddItemBinding
@@ -20,15 +18,20 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddItemBinding
     private var item: Item? = null
     private var phaseAdapter: PhaseAdapter? = null
+    private var itemActionBar: ActionBar? = null
     private val mainDatabase by lazy { MainDatabase.getDatabase(this).getItemDao() }
-    val secDatabase by lazy { MainDatabase.getDatabase(this).getPhaseDao() }
-
+    private val secDatabase by lazy { MainDatabase.getDatabase(this).getPhaseDao() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.Theme_Lab2_timer)
+
         binding = ActivityAddItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        itemActionBar = supportActionBar
 
         // Now we can get our extra data(item) from MainActivity and return it to item
         item = intent.getSerializableExtra("ItemData") as Item?
@@ -39,17 +42,13 @@ class AddItemActivity : AppCompatActivity() {
             binding.recyclerPhaseView.isEnabled = false
             binding.deleteAllPhases.isEnabled = false
             binding.addPhase.isEnabled = false
-
-            lifecycleScope.launch {
-
-            }
         }
         // Else -> Update item
         else {
             binding.addOrUpdateItem.text = "Update"
             binding.editName.setText(item?.name.toString())
             binding.editDuration.setText(item?.duration.toString())
-            binding.editColor.setText(item?.color.toString())
+            setItemColor()
 
             binding.addPhase.setOnClickListener {
                 val intent = Intent(this, AddPhaseActivity::class.java)
@@ -76,6 +75,7 @@ class AddItemActivity : AppCompatActivity() {
                             secDatabase.deleteAllPhases()
                             phaseList = secDatabase.getAllPhases()
                             setPhaseAdapter(phaseList)
+                            setPhaseColorAdapter(item!!.color)
                         }
                     }
                     p0.dismiss()
@@ -109,6 +109,22 @@ class AddItemActivity : AppCompatActivity() {
                 adapter = phaseAdapter
                 setPhaseAdapter(phaseList)
 
+                var specList: List<Phase> = emptyList()
+                itemActionBar?.title = "Add timer"
+
+                if(item != null) {
+                    lifecycleScope.launch {
+                        Log.d("AddItemActivity", "SpecList list length is: ${specList.size}")
+                        specList = secDatabase.getAllPhases().filter { it.timer_id == item?.id }
+                        Log.d("AddItemActivity", "SpecList list length is: ${specList.size}")
+                        setPhaseAdapter(specList)
+                        setPhaseColorAdapter(item!!.color)
+                    }
+                    itemActionBar?.title = "Update timer"
+                }
+
+                setPhaseAdapter(specList)
+
                 phaseAdapter?.setOnActionUpdateListener {
                     val intent = Intent(this@AddItemActivity, AddPhaseActivity::class.java)
                     // We are using putExtra to make transfer out phase data
@@ -126,6 +142,7 @@ class AddItemActivity : AppCompatActivity() {
                             val phaseList = secDatabase.getAllPhases()
                             // Set new itemList to Adapter
                             setPhaseAdapter(phaseList)
+                            setPhaseColorAdapter(item!!.color)
                         }
                         p0.dismiss()
                     }
@@ -147,10 +164,19 @@ class AddItemActivity : AppCompatActivity() {
     }
 
 
+    private fun setPhaseColorAdapter(phaseColor: String) {
+        phaseAdapter?.setColor(phaseColor)
+    }
+
+
     private fun insertItem() {
-        val itemName = binding.editName.text.toString()
-        val itemDuration = binding.editDuration.text.toString().toInt()
-        val itemColor = binding.editColor.text.toString()
+        Log.d("AddItemActivity", "First")
+        var itemName = binding.editName.text.toString()
+        Log.d("AddItemActivity", "Second")
+        var itemDuration = 0
+        Log.d("AddItemActivity", "Third")
+        var itemColor = getItemColor()
+        Log.d("AddItemActivity", "Four")
 
         lifecycleScope.launch {
             if(item == null) {
@@ -159,13 +185,17 @@ class AddItemActivity : AppCompatActivity() {
                     duration = itemDuration,
                     color = itemColor
                 )
+
+                Log.d("AddItemActivity", "Five")
                 mainDatabase.insertItem(new_item)
+                Log.d("AddItemActivity", "Six")
                 finish()
             }
             else {
+                var specList = secDatabase.getAllPhases().filter { it.timer_id == item?.id }
                 val update_item = Item(
                     name = itemName,
-                    duration = itemDuration,
+                    duration = getItemDuration(specList),
                     color = itemColor
                 )
                 update_item.id = item?.id ?: null
@@ -173,5 +203,63 @@ class AddItemActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+
+    private fun getRadioButtonsList(): List<RadioButton> {
+        val count: Int = binding.colorsRGroup.getChildCount()
+        val listOfRadioButtons = ArrayList<RadioButton>()
+
+        for(i in 0 until count) {
+            val radioButtonView: View = binding.colorsRGroup.getChildAt(i)
+            if (radioButtonView is RadioButton) {
+                listOfRadioButtons.add(radioButtonView)
+            }
+        }
+        return listOfRadioButtons
+    }
+
+
+    private fun setItemColor() {
+        var listOfRadioButtons = getRadioButtonsList()
+        var colorList = listOf("#40FF00", "#FF9800", "#F3417E", "#FF3D00", "#FFEE00")
+
+        for(i in listOfRadioButtons.indices) {
+            var radioButton: View = listOfRadioButtons[i]
+
+            if(colorList[i] == item?.color) {
+                binding.colorsRGroup.check(radioButton.id)
+            }
+        }
+    }
+
+
+    private fun getItemColor(): String {
+
+        var colorList = listOf("#40FF00", "#FF9800", "#F3417E", "#FF3D00", "#FFEE00")
+        var itemColor: String? = null
+
+        val array = arrayOf(binding.greenRButton, binding.orangeRButton,
+            binding.pinkRButton, binding.redRButton, binding.yellowRButton
+        )
+
+        for(i in array.indices) {
+            if(array[i].isChecked) itemColor = colorList[i]
+        }
+
+        return itemColor!!
+    }
+
+
+    private fun getItemDuration(phaseList: List<Phase>): Int {
+        var itemDuration = 0
+
+        if(!phaseList.isEmpty()) {
+
+            for(phase in phaseList) {
+                itemDuration = itemDuration.plus(phase.duration)
+            }
+        }
+        return itemDuration!!
     }
 }

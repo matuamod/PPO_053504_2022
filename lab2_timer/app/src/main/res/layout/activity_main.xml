@@ -34,7 +34,7 @@
         android:layout_marginBottom="60dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/purple_500"
-        android:text="Add item" />
+        android:text="Add timer" />
 
 
     <Button

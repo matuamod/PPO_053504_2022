@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Phase name: "
+        android:inputType="text"
         tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -23,6 +24,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Duration: "
+        android:inputType="number"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/editRest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rest: "
+        android:inputType="number"
         tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -31,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Attempt count: "
+        android:inputType="number"
         tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -39,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColor="@color/white"
         android:text="Add" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

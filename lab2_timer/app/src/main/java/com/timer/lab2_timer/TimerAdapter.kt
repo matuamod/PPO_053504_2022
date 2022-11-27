@@ -11,41 +11,33 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class PhaseAdapter : RecyclerView.Adapter<PhaseAdapter.PhaseViewHolder>()  {
+class TimerAdapter : RecyclerView.Adapter<TimerAdapter.TimerPhaseViewHolder>()  {
 
     private var list = mutableListOf<Phase>()
     private var phasesColor: String? = null
-    // Define lambda functions for future callbacks
-    // The unit return type cannot be omitted(means nothing to return)
-    private var actionUpdate: ((Phase) -> Unit)? = null
-    private var actionDelete: ((Phase) -> Unit)? = null
+    var currentPhaseId: Int = 0
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerPhaseViewHolder {
         val view = LayoutInflater.from(parent.context).
-        inflate(R.layout.card_phase_view_holder, parent, false)
+        inflate(R.layout.card_phase_for_timer_view_holder, parent, false)
 
-        return PhaseViewHolder(view)
+        return TimerPhaseViewHolder(view)
     }
 
 
-    override fun onBindViewHolder(holder: PhaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TimerPhaseViewHolder, position: Int) {
         val phasePosition = list[position]
 
         holder.tvName.text = phasePosition.name
         holder.tvDuration.text = phasePosition.duration.toString()
         holder.tvRest.text = phasePosition.rest.toString()
         holder.tvAttemptCount.text = phasePosition.attempt_count.toString()
-        holder.laPhase.setBackgroundColor(Color.parseColor(phasesColor))
 
-        holder.ivActionUpdate.setOnClickListener {
-            // When we want to invoke the listener
-            actionUpdate?.invoke(phasePosition)
+        if(currentPhaseId == position) {
+            holder.laPhase.setBackgroundColor(Color.parseColor("#FF757575"))
         }
-
-        holder.ivActionDelete.setOnClickListener {
-            // When we want to invoke the listener
-            actionDelete?.invoke(phasePosition)
+        else {
+            holder.laPhase.setBackgroundColor(Color.parseColor(phasesColor))
         }
     }
 
@@ -71,25 +63,13 @@ class PhaseAdapter : RecyclerView.Adapter<PhaseAdapter.PhaseViewHolder>()  {
     }
 
 
-    fun setOnActionUpdateListener(callback: (Phase) -> Unit) {
-        this.actionUpdate = callback
-    }
-
-
-    fun setOnActionDeleteListener(callback: (Phase) -> Unit) {
-        this.actionDelete = callback
-    }
-
-
     // All these val's we will be used in onBindViewHolderMethod()
-    class PhaseViewHolder(phaseView: View): RecyclerView.ViewHolder(phaseView) {
+    class TimerPhaseViewHolder(phaseView: View): RecyclerView.ViewHolder(phaseView) {
         val tvName: TextView = phaseView.findViewById(R.id.nameTextView)
         val tvDuration: TextView = phaseView.findViewById(R.id.durationTextView)
         val tvRest: TextView = phaseView.findViewById(R.id.restTextView)
         val tvAttemptCount: TextView = phaseView.findViewById(R.id.attemptCountTextView)
-        val ivActionUpdate: ImageView = phaseView.findViewById(R.id.action_update)
-        val ivActionDelete: ImageView = phaseView.findViewById(R.id.action_delete)
-        val laPhase: LinearLayout = phaseView.findViewById(R.id.phaseViewHolderColor)
+        val laPhase: LinearLayout = phaseView.findViewById(R.id.currentPhaseViewHolderColor)
     }
 
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="edit_text_size">16sp</dimen>
+    <dimen name="edit_row_margin_btm">10sp</dimen>
+    <item format="float" type="dimen" name="smallScaleCoefficient">0.85f</item>
+    <item format="float" type="dimen" name="mediumScaleCoefficient">1f</item>
+    <item format="float" type="dimen" name="largeScaleCoefficient">1.15f</item>
+</resources>

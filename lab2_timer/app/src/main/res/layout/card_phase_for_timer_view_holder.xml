@@ -8,8 +8,9 @@
     app:cardCornerRadius="10dp"
     android:layout_margin="2dp">
 
+
     <LinearLayout
-        android:id="@+id/itemViewHolderColor"
+        android:id="@+id/currentPhaseViewHolderColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
@@ -24,19 +25,20 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/itemName"
+                android:id="@+id/phaseName"
                 android:layout_width="wrap_content"
-                android:hint="Item name :"
+                android:hint="Phase name :"
                 android:textColorHint="@color/black"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 />
 
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
-                tools:text="Item name"
+                tools:text="Phase name"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -52,9 +54,9 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/itemDuration"
+                android:id="@+id/phaseDuration"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="20dp"
                 android:hint="Duration :"
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
@@ -81,10 +83,10 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/itemAttemptCount"
+                android:id="@+id/phaseRest"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:hint="Color :"
+                android:layout_marginLeft="20dp"
+                android:hint="Rest :"
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"
@@ -92,9 +94,38 @@
 
 
             <TextView
-                android:id="@+id/colorTextView"
+                android:id="@+id/restTextView"
                 android:layout_width="wrap_content"
-                tools:text="Color"
+                tools:text="Rest"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/phaseAttemptCount"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:hint="Attempt count :"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/attemptCountTextView"
+                android:layout_width="wrap_content"
+                tools:text="Attempt count"
                 android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:textSize="16sp"
@@ -104,34 +135,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    
-    <ImageView
-        android:id="@+id/action_delete"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="335dp"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_delete"
-        />
-
-
-    <ImageView
-        android:id="@+id/action_update"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="285dp"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_update"
-        />
-
-    <ImageView
-        android:id="@+id/action_play"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="235dp"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_play"
-        />
 
 </androidx.cardview.widget.CardView>

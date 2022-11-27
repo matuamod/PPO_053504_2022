@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reply_entries">
+        <item>@string/size_small</item>
+        <item>@string/size_medium</item>
+        <item>@string/size_large</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>@string/small</item>
+        <item>@string/medium</item>
+        <item>@string/large</item>
+    </string-array>
+
+    <!-- Language Preference -->
+    <string-array name="lang_entries">
+        <item>@string/russian</item>
+        <item>@string/english</item>
+    </string-array>
+
+    <string-array name="lang_values">
+        <item>@string/ru</item>
+        <item>@string/eng</item>
+    </string-array>
+</resources>

@@ -1,12 +1,15 @@
 package com.timer.lab2_timer
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ScrollCaptureCallback
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 // Class, which connect out list with data in MainActivity
@@ -17,6 +20,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
     // The unit return type cannot be omitted(means nothing to return)
     private var actionUpdate: ((Item) -> Unit)? = null
     private var actionDelete: ((Item) -> Unit)? = null
+    private var actionPlay: ((Item) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -35,6 +39,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
         holder.tvName.text = itemPosition.name
         holder.tvDuration.text = itemPosition.duration.toString()
         holder.tvColor.text = itemPosition.color
+        holder.laItem.setBackgroundColor(Color.parseColor(itemPosition.color))
 
         holder.ivActionUpdate.setOnClickListener {
             // When we want to invoke the listener
@@ -44,6 +49,11 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
         holder.ivActionDelete.setOnClickListener {
             // When we want to invoke the listener
             actionDelete?.invoke(itemPosition)
+        }
+
+        holder.ivActionPlay.setOnClickListener {
+            // When we want to invoke the listener
+            actionPlay?.invoke(itemPosition)
         }
     }
 
@@ -74,6 +84,11 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
     }
 
 
+    fun setOnActionPlayListener(callback: (Item) -> Unit) {
+        this.actionPlay = callback
+    }
+
+
     // Create our ViewHolder for ItemAdapter (val's for connection between our Activity and list items)
     // All these val's we will be used in onBindViewHolderMethod()
     class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -82,6 +97,8 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
         val tvColor: TextView = itemView.findViewById(R.id.colorTextView)
         val ivActionUpdate: ImageView = itemView.findViewById(R.id.action_update)
         val ivActionDelete: ImageView = itemView.findViewById(R.id.action_delete)
+        val ivActionPlay: ImageView = itemView.findViewById(R.id.action_play)
+        var laItem: LinearLayout = itemView.findViewById(R.id.itemViewHolderColor)
     }
 
 }

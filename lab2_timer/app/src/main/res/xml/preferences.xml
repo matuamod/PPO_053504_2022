@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="General">
+        android:title="Theme">
         <SwitchPreference
             android:key="theme_preference"
             android:defaultValue="false"
-            android:title="Dark Theme">
+            android:title="@string/theme_title">
         </SwitchPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Language">
+        <ListPreference
+            app:key="language"
+            app:defaultValue="eng"
+            app:entries="@array/lang_entries"
+            app:entryValues="@array/lang_values"
+            app:title="@string/lang_action_title"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="FontSize">
+        <ListPreference
+            app:key="font_size"
+            app:defaultValue="medium"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:title="@string/text_size_title"
+            app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
 
     <PreferenceCategory

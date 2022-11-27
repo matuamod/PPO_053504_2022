@@ -2,4 +2,20 @@
     <string name="app_name">lab2_timer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lang_header">Language</string>
+    <string name="theme_title">Dark theme</string>
+    <string name="text_size_title">Text size</string>
+    <string name="lang_title">Language</string>
+    <string name="lang_action_title">Choose language</string>
+    <string name="size_small">Small</string>
+    <string name="size_medium">Medium</string>
+    <string name="size_large">Large</string>
+    <string name="small" translatable="false">small</string>
+    <string name="medium" translatable="false">medium</string>
+    <string name="large" translatable="false">large</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
+    <string name="ru" translatable="false">ru</string>
+    <string name="eng" translatable="false">eng</string>
+    <string name="settings_item">Settings</string>
 </resources>

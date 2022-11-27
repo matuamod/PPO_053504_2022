@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginTop="16dp"
-    tools:context=".AddItemActivity">
+    android:orientation="vertical"
 
+    tools:context=".AddItemActivity">
 
     <EditText
         android:id="@+id/editName"
@@ -15,6 +15,7 @@
         android:layout_marginTop="100dp"
         android:layout_height="wrap_content"
         android:hint="Item name: "
+        android:inputType="text"
         tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -22,16 +23,89 @@
         android:id="@+id/editDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Duration: "
+        android:hint="Duration: default = 0"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="numberDecimal"
         tools:ignore="TouchTargetSizeCheck" />
 
 
-    <EditText
-        android:id="@+id/editColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Color: "
-        tools:ignore="TouchTargetSizeCheck" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:text="Color: ">
+        </TextView>
+
+
+        <RadioGroup
+            android:id="@+id/colorsRGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/greenRButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#40FF00"
+                android:checked="true"
+                android:background="@drawable/circle_toggle">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/orangeRButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#FF9800"
+                android:background="@drawable/circle_toggle">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/pinkRButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#F3417E"
+                android:background="@drawable/circle_toggle">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/redRButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#FF3D00"
+                android:background="@drawable/circle_toggle">
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/yellowRButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="#FFEE00"
+                android:background="@drawable/circle_toggle">
+
+            </RadioButton>
+
+        </RadioGroup>
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -56,6 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
             android:text="del phases" />
 
 
@@ -64,6 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
             android:text="Add timer" />
 
 
@@ -73,6 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
             android:text="Add phase" />
 
 

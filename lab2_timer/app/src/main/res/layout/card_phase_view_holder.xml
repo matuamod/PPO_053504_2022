@@ -9,6 +9,7 @@
     android:layout_margin="2dp">
 
     <LinearLayout
+        android:id="@+id/phaseViewHolderColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
@@ -26,7 +27,7 @@
                 android:id="@+id/phaseName"
                 android:layout_width="wrap_content"
                 android:hint="Phase name :"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/black"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
                 />
@@ -37,7 +38,7 @@
                 android:layout_width="wrap_content"
                 tools:text="Phase name"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
                 />
@@ -55,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:hint="Duration :"
-                android:textColorHint="#B4B0B0"
+                android:textColorHint="@color/black"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"
                 />
@@ -66,7 +67,36 @@
                 android:layout_width="wrap_content"
                 tools:text="Duration"
                 android:layout_marginLeft="10dp"
-                android:textColor="#B4B0B0"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/phaseRest"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:hint="Rest :"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                />
+
+
+            <TextView
+                android:id="@+id/restTextView"
+                android:layout_width="wrap_content"
+                tools:text="Rest"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"
                 />
@@ -84,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:hint="Attempt count :"
-                android:textColorHint="#B4B0B0"
+                android:textColorHint="@color/black"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"
                 />
@@ -94,7 +124,7 @@
                 android:id="@+id/attemptCountTextView"
                 android:layout_width="wrap_content"
                 tools:text="Attempt count"
-                android:textColor="#B4B0B0"
+                android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"
@@ -110,7 +140,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="335dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_delete"
         />
 
@@ -120,7 +150,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="285dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_update"
         />
 
